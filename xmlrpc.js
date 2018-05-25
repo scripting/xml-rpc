@@ -12,7 +12,6 @@ const utils = require ("daveutils");
 function encode (s) {
 	return (utils.encodeXml (s));
 	}
-
 function getJavaScriptValue (theValue) {
 	switch (typeof (theValue)) {
 		case "string":
@@ -293,5 +292,3 @@ function xmlRpcServer (xmltext, callback) {
 			}
 		});
 	}
-
-

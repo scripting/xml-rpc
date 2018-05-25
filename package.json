@@ -5,6 +5,13 @@
 	"license": "MIT",
 	"version": "0.4.0",
 	"main": "xmlrpc.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/scripting/xml-rpc.git"
+		},
+	"files": [
+		"xmlrpc.js"
+		],
 	"dependencies" : {
 		"xml2js": "*",
 		"daveutils": "*",
