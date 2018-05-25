@@ -1,6 +1,6 @@
 {
 	"name": "xmlrpc",
-	"description": "An XML-RPC client, and eventually a server.",
+	"description": "XML-RPC client and server in JavaScript.",
 	"author": "Dave Winer <dave@smallpicture.com>",
 	"license": "MIT",
 	"version": "0.4.0",
