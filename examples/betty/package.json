@@ -1,0 +1,12 @@
+{
+	"name": "betty",
+	"description": "UserLand's 'betty' test server, written in JavaScript, running in Node.",
+	"author": "Dave Winer <dave@smallpicture.com>",
+	"license": "MIT",
+	"version": "0.4.0",
+	"dependencies" : {
+		"daveutils": "*",
+		"davehttp": "*",
+		"davexmlrpc": "*"
+		} 
+	}

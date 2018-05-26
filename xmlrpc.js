@@ -1,9 +1,9 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.0";
+var myProductName = "xmlrpc"; myVersion = "0.4.1";
 
 exports.client = xmlRpcClient; 
 exports.server = xmlRpcServer; 
 exports.buildCall = xmlRpcBuildCall; 
-exports.getReturnValue = getReturnValue;
+exports.getReturnXml = getReturnXml;
 
 const xml2js = require ("xml2js");
 const request = require ("request");
@@ -65,7 +65,7 @@ function getJavaScriptValue (theValue) {
 			return ("<base64>" + btoa (theValue) + "</base64>");
 		}
 	}
-function getReturnValue (theValue) {
+function getReturnXml (theValue) {
 	var xmltext = "", indentlevel = "";
 	function add (s) {
 		xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
