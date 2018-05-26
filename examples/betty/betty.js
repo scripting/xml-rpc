@@ -104,12 +104,17 @@ davehttp.start (config, function (theRequest) {
 					theRequest.httpReturn (500, "text/plain", err.message);
 					}
 				else {
-					var returnValue = handleBettyCall (verb, params);
-					var xmltext = xmlrpc.getReturnXml (returnValue);
-					theRequest.httpReturn (200, "text/xml", xmltext);
+					try {
+						var returnValue = handleBettyCall (verb, params); //entirely in JavaScript
+						var xmltext = xmlrpc.getReturnXml (returnValue); //translate result to XML
+						theRequest.httpReturn (200, "text/xml", xmltext); //return the XML
+						}
+					catch (err) {
+						theRequest.httpReturn (500, "text/plain", err.message);
+						}
 					}
 				});
 			return;
 		}
-	theRequest.httpReturn (500, "text/plain", "That's something we can't do for you. Sorry!! ;-(");
+	theRequest.httpReturn (404, "text/plain", "Not found.! ;-(");
 	});
