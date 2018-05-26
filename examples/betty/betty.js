@@ -97,24 +97,35 @@ function handleBettyCall (verb, params) {
 	return (undefined);
 	}
 davehttp.start (config, function (theRequest) {
+	function notFoundReturn () {
+		theRequest.httpReturn (404, "text/plain", "Not found.");
+		}
+	function errorReturn (err) {
+		theRequest.httpReturn (500, "text/plain", err.message);
+		}
 	switch (theRequest.lowerpath) {
 		case "/rpc2":
 			xmlrpc.server (theRequest.postBody, function (err, verb, params) {
 				if (err) {
-					theRequest.httpReturn (500, "text/plain", err.message);
+					errorReturn (err);
 					}
 				else {
 					try {
 						var returnValue = handleBettyCall (verb, params); //entirely in JavaScript
-						var xmltext = xmlrpc.getReturnXml (returnValue); //translate result to XML
-						theRequest.httpReturn (200, "text/xml", xmltext); //return the XML
+						if (returnValue === undefined) {
+							notFoundReturn ();
+							}
+						else {
+							var xmltext = xmlrpc.getReturnXml (returnValue); //translate result to XML
+							theRequest.httpReturn (200, "text/xml", xmltext); //return the XML
+							}
 						}
 					catch (err) {
-						theRequest.httpReturn (500, "text/plain", err.message);
+						errorReturn (err);
 						}
 					}
 				});
 			return;
 		}
-	theRequest.httpReturn (404, "text/plain", "Not found.! ;-(");
+	notFoundReturn ();
 	});
