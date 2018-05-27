@@ -1,9 +1,10 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.1";
+var myProductName = "xmlrpc"; myVersion = "0.4.3";
 
 exports.client = xmlRpcClient; 
 exports.server = xmlRpcServer; 
 exports.buildCall = xmlRpcBuildCall; 
 exports.getReturnXml = getReturnXml;
+exports.getFaultXml = getFaultXml;
 
 const xml2js = require ("xml2js");
 const request = require ("request");
@@ -82,6 +83,25 @@ function getReturnXml (theValue) {
 	add ("</methodResponse>"); indentlevel--;
 	return (xmltext);
 	}
+function getFaultXml (err) {
+	var xmltext = "", indentlevel = "";
+	function add (s) {
+		xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
+		}
+	const theStruct = {
+		faultCode: 1,
+		faultString: err.message
+		};
+	add ("<?xml version=\"1.0\"?>");
+	add ("<methodResponse>"); indentlevel++;
+	add ("<fault>"); indentlevel++;
+	add ("<value>"); indentlevel++;
+	add (getJavaScriptValue (theStruct));
+	add ("</value>"); indentlevel--;
+	add ("</fault>"); indentlevel--;
+	add ("</methodResponse>"); indentlevel--;
+	return (xmltext);
+	}
 function xmlRpcBuildCall (verb, params) {
 	var xmltext = "", indentlevel = "";
 	function add (s) {
@@ -127,7 +147,7 @@ function xmlRpcGetValue (value) {
 		}
 	for (x in value) {
 		switch (x) {
-			case "i4": case "double": //all numbers in JavaScript are floating point
+			case "i4": case "int": case "double": //all numbers in JavaScript are floating point
 				returnedValue = Number (value [x]);
 				break;
 			case "string":
@@ -195,7 +215,6 @@ function xmlRpcClient (urlEndpoint, verb, params, callback) {
 				callback (err);
 				}
 			var returnedValue = undefined, methodResponse = jstruct.methodResponse;
-			console.log (utils.jsonStringify (jstruct));
 			if (methodResponse !== undefined) {
 				var params = methodResponse.params;
 				if (params !== undefined) {
@@ -226,8 +245,6 @@ function xmlRpcClient (urlEndpoint, verb, params, callback) {
 	
 	var xmltext = xmlRpcBuildCall (verb, params);
 	
-	console.log ("xmlRpcClient: verb == " + verb + ", urlEndpoint == " + urlEndpoint);
-	console.log ("xmlRpcClient: xmltext == \n" + xmltext);
 	
 	var theRequest = {
 		url: urlEndpoint,
@@ -250,7 +267,6 @@ function xmlRpcClient (urlEndpoint, verb, params, callback) {
 		});
 	}
 function xmlRpcServer (xmltext, callback) {
-	console.log ("xmlRpcServer: xmltext == \n\n" + xmltext);
 	var options = {
 		explicitArray: false
 		};
@@ -263,7 +279,6 @@ function xmlRpcServer (xmltext, callback) {
 			callback (err);
 			}
 		
-		console.log (utils.jsonStringify (jstruct));
 		
 		
 		var methodCall = jstruct.methodCall, verb = undefined, params = new Array ();

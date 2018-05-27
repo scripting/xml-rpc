@@ -1,15 +1,18 @@
+var myProductName = "betty"; myVersion = "0.4.1";
+
 const xmlrpc = require ("davexmlrpc");
 const utils = require ("daveutils");
 const davehttp = require ("davehttp"); 
 const fs = require ("fs");
 
 var config = {
-	port: 1409,
+	port: 5392,
 	flPostEnabled: true,
+	flAllowAccessFromAnywhere: true,
 	flLogToConsole: true
 	}
 function nthState (n) {
-	var states = [
+	const states = [
 		"Alabama",
 		"Alaska",
 		"Arizona",
@@ -61,7 +64,11 @@ function nthState (n) {
 		"Wisconsin",
 		"Wyoming"
 		];
-	return (states [n - 1]);
+	var theName = states [n - 1];
+	if (theName === undefined) {
+		throw {message: "Can't get the state name because the number must be between 1 and 50."};
+		}
+	return (theName);
 	}
 function getStateList (numlist) {
 	var s = "";
@@ -83,7 +90,17 @@ function getStateStruct (statestruct) {
 		}
 	return (utils.stringMid (s, 1, s.length - 1));
 	}
+function nowXml () {
+	var xmltext = "", indentlevel = "";
+	function add (s) {
+		xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
+		}
+	add ("<?xml version=\"1.0\"?>");
+	add ("<now>" + new Date ().toISOString () + "</now>");
+	return (xmltext);
+	}
 function handleBettyCall (verb, params) {
+	console.log ("handleBettyCall: verb == " + verb + ", params == " + utils.jsonStringify (params));
 	switch (verb) {
 		case "examples.getStateList":
 			return (getStateList (params [0]));
@@ -101,8 +118,9 @@ davehttp.start (config, function (theRequest) {
 		theRequest.httpReturn (404, "text/plain", "Not found.");
 		}
 	function errorReturn (err) {
-		theRequest.httpReturn (500, "text/plain", err.message);
+		theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultXml (err)); 
 		}
+	console.log ("theRequest.lowerpath == " + theRequest.lowerpath);
 	switch (theRequest.lowerpath) {
 		case "/rpc2":
 			xmlrpc.server (theRequest.postBody, function (err, verb, params) {
@@ -117,7 +135,8 @@ davehttp.start (config, function (theRequest) {
 							}
 						else {
 							var xmltext = xmlrpc.getReturnXml (returnValue); //translate result to XML
-							theRequest.httpReturn (200, "text/xml", xmltext); //return the XML
+							console.log (xmltext);
+							theRequest.httpReturn (200, "text/plain", xmltext); //return the XML
 							}
 						}
 					catch (err) {
@@ -125,6 +144,12 @@ davehttp.start (config, function (theRequest) {
 						}
 					}
 				});
+			return;
+		case "/now":
+			theRequest.httpReturn (200, "text/plain", new Date ());
+			return;
+		case "/nowxml":
+			theRequest.httpReturn (200, "text/plain", nowXml ());
 			return;
 		}
 	notFoundReturn ();
