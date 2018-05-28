@@ -1,0 +1,11 @@
+body {
+	font-family: Ubuntu;
+	font-size: 18px;
+	background-color: whitesmoke;
+	}
+.divPageBody {
+	width: 60%;
+	margin-top: 90px;
+	margin-left: auto;
+	margin-right: auto;
+	}
