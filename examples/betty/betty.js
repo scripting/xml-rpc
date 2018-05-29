@@ -1,4 +1,4 @@
-var myProductName = "betty"; myVersion = "0.4.1";
+var myProductName = "betty"; myVersion = "0.4.2";
 
 const xmlrpc = require ("davexmlrpc");
 const utils = require ("daveutils");
@@ -11,6 +11,14 @@ var config = {
 	flAllowAccessFromAnywhere: true,
 	flLogToConsole: true
 	}
+var stats = {
+	callCounts: new Object (),
+	whenLastCall: new Date (0),
+	ctStatsWrites: 0
+	};
+var flStatsChanged = false;
+const fnameStats = "stats.json";
+
 function nthState (n) {
 	const states = [
 		"Alabama",
@@ -66,7 +74,7 @@ function nthState (n) {
 		];
 	var theName = states [n - 1];
 	if (theName === undefined) {
-		throw {message: "Can't get the state name because the number must be between 1 and 50."};
+		throw {message: "Can't get the name for state #" + n + " because the number must be between 1 and 50."};
 		}
 	return (theName);
 	}
@@ -100,7 +108,13 @@ function nowXml () {
 	return (xmltext);
 	}
 function handleBettyCall (verb, params) {
-	console.log ("handleBettyCall: verb == " + verb + ", params == " + utils.jsonStringify (params));
+	if (stats.callCounts [verb] === undefined) {
+		stats.callCounts [verb] = 0;
+		}
+	stats.callCounts [verb]++;
+	stats.whenLastCall = new Date ();
+	flStatsChanged = true;
+	
 	switch (verb) {
 		case "examples.getStateList":
 			return (getStateList (params [0]));
@@ -110,47 +124,80 @@ function handleBettyCall (verb, params) {
 			return (getStateNames (params [0], params [1], params [2], params [3]));
 		case "examples.getStateStruct":
 			return (getStateStruct (params [0]));
+		default: 
+			throw {message: "Can't make the call because \"" + verb + "\" is not defined."};
 		}
 	return (undefined);
 	}
-davehttp.start (config, function (theRequest) {
-	function notFoundReturn () {
-		theRequest.httpReturn (404, "text/plain", "Not found.");
+function readStats (callback) {
+	fs.readFile (fnameStats, function (err, jsontext) {
+		if (!err) {
+			try {
+				stats = JSON.parse (jsontext);
+				}
+			catch (err) {
+				}
+			}
+		callback ();
+		});
+	}
+function everyMinute () {
+	var now = new Date ();
+	console.log ("\n" + myProductName + " v" + myVersion + ": " + now.toLocaleTimeString ());
+	}
+function everySecond () {
+	if (flStatsChanged) {
+		if (utils.secondsSince (stats.whenLastCall) > 1) {
+			flStatsChanged = false;
+			stats.ctStatsWrites++;
+			fs.writeFile (fnameStats, utils.jsonStringify (stats), function (err) {
+				});
+			}
 		}
-	function errorReturn (err) {
-		theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultXml (err)); 
-		}
-	console.log ("theRequest.lowerpath == " + theRequest.lowerpath);
-	switch (theRequest.lowerpath) {
-		case "/rpc2":
-			xmlrpc.server (theRequest.postBody, function (err, verb, params) {
-				if (err) {
-					errorReturn (err);
-					}
-				else {
-					try {
-						var returnValue = handleBettyCall (verb, params); //entirely in JavaScript
-						if (returnValue === undefined) {
-							notFoundReturn ();
+	}
+function startup () {
+	readStats (function () {
+		davehttp.start (config, function (theRequest) {
+			function notFoundReturn () {
+				theRequest.httpReturn (404, "text/plain", "Not found.");
+				}
+			function errorReturn (err) {
+				theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultXml (err)); 
+				}
+			switch (theRequest.lowerpath) {
+				case "/rpc2":
+					xmlrpc.server (theRequest.postBody, function (err, verb, params) {
+						if (err) {
+							errorReturn (err);
 							}
 						else {
-							var xmltext = xmlrpc.getReturnXml (returnValue); //translate result to XML
-							console.log (xmltext);
-							theRequest.httpReturn (200, "text/plain", xmltext); //return the XML
+							try {
+								var returnValue = handleBettyCall (verb, params); //entirely in JavaScript
+								if (returnValue === undefined) {
+									notFoundReturn ();
+									}
+								else {
+									var xmltext = xmlrpc.getReturnXml (returnValue); //translate result to XML
+									theRequest.httpReturn (200, "text/plain", xmltext); //return the XML
+									}
+								}
+							catch (err) {
+								errorReturn (err);
+								}
 							}
-						}
-					catch (err) {
-						errorReturn (err);
-						}
-					}
-				});
-			return;
-		case "/now":
-			theRequest.httpReturn (200, "text/plain", new Date ());
-			return;
-		case "/nowxml":
-			theRequest.httpReturn (200, "text/plain", nowXml ());
-			return;
-		}
-	notFoundReturn ();
-	});
+						});
+					return;
+				case "/now":
+					theRequest.httpReturn (200, "text/plain", new Date ());
+					return;
+				case "/nowxml":
+					theRequest.httpReturn (200, "text/plain", nowXml ());
+					return;
+				}
+			notFoundReturn ();
+			});
+		setInterval (everySecond, 1000); 
+		setInterval (everyMinute, 60000); 
+		});
+	}
+startup ();

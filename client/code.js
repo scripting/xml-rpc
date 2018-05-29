@@ -19,7 +19,6 @@ function testStateList (callback) {
 		});
 	}
 function testStateName () {
-	var whenstart = new Date ();
 	xmlRpcClient (urlEndpoint, "examples.getStateName", 23, function (err, data) {
 		if (err) {
 			console.log ("err.message == " + err.message);
@@ -33,7 +32,6 @@ function testStateName () {
 		});
 	}
 function testStateName (callback) {
-	var whenstart = new Date ();
 	xmlRpcClient (urlEndpoint, "examples.getStateName", 23, function (err, data) {
 		if (err) {
 			console.log ("err.message == " + err.message);
@@ -47,7 +45,6 @@ function testStateName (callback) {
 		});
 	}
 function testStateNames (callback) {
-	var whenstart = new Date ();
 	xmlRpcClient (urlEndpoint, "examples.getStateNames", [12, 22, 32, 42], function (err, data) {
 		if (err) {
 			console.log ("err.message == " + err.message);
@@ -61,7 +58,6 @@ function testStateNames (callback) {
 		});
 	}
 function testStateStruct (callback) {
-	var whenstart = new Date ();
 	xmlRpcClient (urlEndpoint, "examples.getStateStruct", {a: 22, b: 48}, function (err, data) {
 		if (err) {
 			console.log ("err.message == " + err.message);
@@ -75,8 +71,20 @@ function testStateStruct (callback) {
 		});
 	}
 function testFault (callback) {
-	var whenstart = new Date ();
 	xmlRpcClient (urlEndpoint, "examples.getStateName", 900, function (err, data) {
+		if (err) {
+			console.log ("err.message == " + err.message);
+			}
+		else {
+			console.log (jsonStringify (data));
+			}
+		if (callback !== undefined) {
+			callback ();
+			}
+		});
+	}
+function testNoSuchVerb (callback) {
+	xmlRpcClient (urlEndpoint, "doesNotExist", undefined, function (err, data) {
 		if (err) {
 			console.log ("err.message == " + err.message);
 			}
@@ -91,11 +99,13 @@ function testFault (callback) {
 
 function startup () {
 	console.log ("startup");
-	testFault (function () {
-		testStateList (function () {
-			testStateName (function () {
-				testStateNames (function () {
-					testStateStruct (function () {
+	testNoSuchVerb (function () {
+		testFault (function () {
+			testStateList (function () {
+				testStateName (function () {
+					testStateNames (function () {
+						testStateStruct (function () {
+							});
 						});
 					});
 				});
