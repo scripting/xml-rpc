@@ -14,5 +14,13 @@ An XML-RPC client and server in JavaScript.
 
 ### Client for the browser
 
-The core file for the browser version is xmlrpc.js in the client folder. 
+The core file for the browser version is <a href="https://github.com/scripting/xml-rpc/blob/master/client/xmlrpc.js">xmlrpc.js</a> in the client folder. 
+
+It uses routines in several of my libraries: 
+
+utils.js -- stringMid, stringNthField, filledString, encodeXml, 
+
+xml.js -- xmlGetAddress, 
+
+It also uses jQuery.
 
