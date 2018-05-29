@@ -40,7 +40,7 @@ The demo app, in <a href="https://github.com/scripting/xml-rpc/blob/master/clien
 
 The betty server it calls is a clone of the one we used in the earlier work on XML-RPC.
 
-You can run the test app <a href="http://scripting.com/code/xmlrpcbrowserclient/">from</a> scripting.com. 
+You can run the test app <a href="http://scripting.com/code/xmlrpcbrowserclient/">from</a> scripting.com.   
 
 ### Questions, comments?
 
