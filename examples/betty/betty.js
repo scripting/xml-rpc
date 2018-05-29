@@ -1,4 +1,4 @@
-var myProductName = "betty"; myVersion = "0.4.2";
+var myProductName = "betty"; myVersion = "0.4.3";
 
 const xmlrpc = require ("davexmlrpc");
 const utils = require ("daveutils");
@@ -141,10 +141,6 @@ function readStats (callback) {
 		callback ();
 		});
 	}
-function everyMinute () {
-	var now = new Date ();
-	console.log ("\n" + myProductName + " v" + myVersion + ": " + now.toLocaleTimeString ());
-	}
 function everySecond () {
 	if (flStatsChanged) {
 		if (utils.secondsSince (stats.whenLastCall) > 1) {
@@ -197,7 +193,6 @@ function startup () {
 			notFoundReturn ();
 			});
 		setInterval (everySecond, 1000); 
-		setInterval (everyMinute, 60000); 
 		});
 	}
 startup ();
