@@ -44,13 +44,13 @@ You can run the test app <a href="http://scripting.com/code/xmlrpcbrowserclient/
 
 ### Please help test for interop
 
-If you're running XML-RPC in your world, could you try testing against the server I have running at betty.scripting.com?
+If you're running XML-RPC in your world, could you try testing against the server 
 
-The server is accessible through port 80. The calls it handles are exactly the ones handled by the userland version of the test server. 
+I have running at betty.scripting.com. The server is accessible through port 80. The calls it handles are exactly the ones handled by the userland version of the test server. Demo <a href="https://github.com/scripting/xml-rpc/blob/master/client/code.js">code</a> that calls the actual server is provided, in JavaScript.
 
-The goal is to have betty.userland.com be replaced by the one running here. But only after enough testing to be confident that it makes a good reference server. 
+The goal is to replace betty.userland.com with the one running here. But only after enough testing to be confident that it makes a good reference server. 
 
-If you have success, or find problems, please post a note in the issues section here. Thanks!
+If you have success, or find problems, please post a note in the <a href="https://github.com/scripting/xml-rpc/issues">issues section</a> here. Thanks!
 
 ### Questions, comments?
 
