@@ -24,3 +24,7 @@ xml.js -- xmlGetAddress,
 
 It also uses jQuery.
 
+The demo app, in index.html and its two included files, code.js and styles.css, make six calls to the betty server, two to test error reporting, and four to test various combinations of scalars, parameter lists, structs and array. 
+
+The betty server it calls is a clone of the one we used in the earlier work on XML-RPC.
+
