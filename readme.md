@@ -8,7 +8,7 @@ An XML-RPC client and server in JavaScript.
 
 * Pure JavaScript.
 
-* Written by one of the designers of the protocol.
+* Written by one of the <a href="http://scripting.com/?tab=about">designers</a> of the protocol.
 
 ### Client and server for Node.js
 
@@ -41,6 +41,16 @@ The demo app, in <a href="https://github.com/scripting/xml-rpc/blob/master/clien
 The betty server it calls is a clone of the one we used in the earlier work on XML-RPC.
 
 You can run the test app <a href="http://scripting.com/code/xmlrpcbrowserclient/">from</a> scripting.com.   
+
+### Please help test for interop
+
+If you're running XML-RPC in your world, could you try testing against the server I have running at betty.scripting.com?
+
+The server is accessible through port 80. The calls it handles are exactly the ones handled by the userland version of the test server. 
+
+The goal is to have betty.userland.com be replaced by the one running here. But only after enough testing to be confident that it makes a good reference server. 
+
+If you have success, or find problems, please post a note in the issues section here. Thanks!
 
 ### Questions, comments?
 
