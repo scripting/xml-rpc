@@ -1,4 +1,4 @@
-var myProductName = "betty"; myVersion = "0.4.3";
+var myProductName = "betty"; myVersion = "0.4.5";
 
 const xmlrpc = require ("davexmlrpc");
 const utils = require ("daveutils");

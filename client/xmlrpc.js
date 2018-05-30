@@ -61,6 +61,9 @@ function xmlRpcGetValue (obj, callback) {
 		}
 	return (returnedValue);
 	}
+function xmlRpcGetAddress (adrx, name) {
+	return (adrx.find (name));
+	}
 function xmlRpcClient (urlEndpoint, verb, params, callback) {
 	const method = "POST";
 	
@@ -118,17 +121,17 @@ function xmlRpcClient (urlEndpoint, verb, params, callback) {
 		}
 	function parseReturnedXml (xmltext, callback) {
 		var xstruct = $($.parseXML (xmltext));
-		var adrMethodResponse = xmlGetAddress (xstruct, "methodResponse");
-		var adrParams = xmlGetAddress (adrMethodResponse, "params");
+		var adrMethodResponse = xmlRpcGetAddress (xstruct, "methodResponse");
+		var adrParams = xmlRpcGetAddress (adrMethodResponse, "params");
 		if (adrParams.length > 0) {
-			var adrParam = xmlGetAddress (adrParams, "param"), value;
+			var adrParam = xmlRpcGetAddress (adrParams, "param"), value;
 			$(adrParam).children ("value").each (function () {
 				value = xmlRpcGetValue (this);
 				});
 			callback (undefined, value);
 			}
 		else {
-			var adrFault = xmlGetAddress (adrMethodResponse, "fault"), value;
+			var adrFault = xmlRpcGetAddress (adrMethodResponse, "fault"), value;
 			$(adrFault).children ("value").each (function () {
 				value = xmlRpcGetValue (this);
 				});

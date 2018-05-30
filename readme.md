@@ -52,6 +52,38 @@ The goal is to replace betty.userland.com with the one running here. But only af
 
 If you have success, or find problems, please post a note in the <a href="https://github.com/scripting/xml-rpc/issues">issues section</a> here. Thanks!
 
+### Simple XML-RPC debugger
+
+I've put up a simple app that lets you try calling an XML-RPC procedure from an HTML form, where you supply the URL of the endpoint, the verb you want to call, and its parameters as a JavaScript expression. 
+
+It then displays the result in JSON in a box below. 
+
+If there's an error message it's displayed in red.
+
+You can try calling these routines on betty.scripting.com (it's the default endpoint):
+
+1. examples.getStateName, params = 31
+
+2. examples.getStateNames, params = [12, 22, 32, 42]
+
+3. examples.getStateList, params = [\[12, 22, 32, 42]\] 
+
+4. examples.getStateStruct, params = [{state1: 3, state2: 42}] 
+
+5. examples.getStateName, params = 900 (error)
+
+5. noSuchName (error)
+
+### How params work in the xmlRpcClient
+
+The third param to the xmlRpcClient routine is either a value or a list of values.
+
+If it's a value, the XML-RPC procedure is called with a single parameter.
+
+If it's a list with N elements, the procedure is called with N params. 
+
+If you want to call a procedure with a single param that's a list, send a list with a single element that's the list. It's the one weird case for this calling convention, and is illustrated with the third call, above.
+
 ### Questions, comments?
 
 Post an <a href="https://github.com/scripting/xml-rpc/issues">issue</a> here. 
