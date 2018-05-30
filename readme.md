@@ -54,7 +54,7 @@ If you have success, or find problems, please post a note in the <a href="https:
 
 ### Simple XML-RPC debugger
 
-I've put up a simple app that lets you try calling an XML-RPC procedure from an HTML form, where you supply the URL of the endpoint, the verb you want to call, and its parameters as a JavaScript expression. 
+I've put up a <a href="http://scripting.com/code/xmlrpcdebugger/">simple app</a> that lets you try calling an XML-RPC procedure from an HTML form, where you supply the URL of the endpoint, the verb you want to call, and its parameters as a JavaScript expression. 
 
 It then displays the result in JSON in a box below. 
 
