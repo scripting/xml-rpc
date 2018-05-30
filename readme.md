@@ -74,6 +74,8 @@ You can try calling these routines on betty.scripting.com (it's the default endp
 
 5. noSuchName (error)
 
+If you open the JavaScript console, you'll see the actual XML-RPC cals, in XML, as they go over the wire. <a href="http://scripting.com/images/2018/05/30/xmlRpcOverTheWire.png">Screen shot</a>.
+
 ### How params work in the xmlRpcClient
 
 The third param to the xmlRpcClient routine is either a value or a list of values.

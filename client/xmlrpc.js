@@ -164,12 +164,14 @@ function xmlRpcClient (urlEndpoint, verb, params, callback) {
 	add ("</params>"); indentlevel--;
 	add ("</methodCall>"); indentlevel--;
 	
+	console.log ("\nxmlRpcClient: verb == " + verb + ", urlEndpoint == " + urlEndpoint + ", xmltext == \n\n" + xmltext + "\n");
 	
 	$.ajax ({
 		type: "POST",
 		url: urlEndpoint,
 		data: xmltext, 
 		success: function (xmltext) {
+			console.log ("xmlRpcClient: server returned xmltext == \n" + xmltext + "\n\n");
 			if (callback !== undefined) {
 				parseReturnedXml (xmltext, callback);
 				}
