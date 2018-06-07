@@ -161,7 +161,7 @@ function startup () {
 				case "/rpc2":
 					xmlrpc.server (theRequest.postBody, function (err, verb, params, format) {
 						function errorReturn (err) {
-							theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultXml (err, format)); 
+							theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultText (err, format)); 
 							}
 						if (err) {
 							errorReturn (err);
@@ -173,7 +173,7 @@ function startup () {
 									notFoundReturn ();
 									}
 								else {
-									var xmltext = xmlrpc.getReturnXml (returnValue, format); //translate result to XML
+									var xmltext = xmlrpc.getReturnText (returnValue, format); //translate result to XML
 									theRequest.httpReturn (200, "text/plain", xmltext); //return the XML
 									}
 								}
