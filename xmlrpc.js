@@ -1,6 +1,6 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.4";
+var myProductName = "xmlrpc"; myVersion = "0.4.10";
 
-exports.client = xmlRpcClient; 
+exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
 exports.buildCall = xmlRpcBuildCall; 
 exports.getReturnXml = getReturnXml;
@@ -10,6 +10,19 @@ const xml2js = require ("xml2js");
 const request = require ("request");
 const utils = require ("daveutils");
 
+const config = {
+	flProcessJsonRpcCalls: true
+	};
+
+function firstNonWhitespaceChar (s) { //6/3/18 by DW
+	for (var i = 0; i < s.length; i++) {
+		var ch = s [i];
+		if (!utils.isWhitespace (ch)) {
+			return (ch);
+			}
+		}
+	return (undefined);
+	}
 function encode (s) {
 	return (utils.encodeXml (s));
 	}
@@ -66,24 +79,36 @@ function getJavaScriptValue (theValue) {
 			return ("<base64>" + btoa (theValue) + "</base64>");
 		}
 	}
-function getReturnXml (theValue) {
+function getReturnXml (theValue, format) {
 	var xmltext = "", indentlevel = "";
 	function add (s) {
 		xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
 		}
-	add ("<?xml version=\"1.0\"?>");
-	add ("<methodResponse>"); indentlevel++;
-	add ("<params>"); indentlevel++;
-	add ("<param>"); indentlevel++;
-	add ("<value>"); indentlevel++;
-	add (getJavaScriptValue (theValue));
-	add ("</value>"); indentlevel--;
-	add ("</param>"); indentlevel--;
-	add ("</params>"); indentlevel--;
-	add ("</methodResponse>"); indentlevel--;
+	switch (format) {
+		case "xml": case undefined:
+			add ("<?xml version=\"1.0\"?>");
+			add ("<methodResponse>"); indentlevel++;
+			add ("<params>"); indentlevel++;
+			add ("<param>"); indentlevel++;
+			add ("<value>"); indentlevel++;
+			add (getJavaScriptValue (theValue));
+			add ("</value>"); indentlevel--;
+			add ("</param>"); indentlevel--;
+			add ("</params>"); indentlevel--;
+			add ("</methodResponse>"); indentlevel--;
+			break;
+		case "json":
+			var jstruct = {
+				methodResponse: {
+					value: theValue
+					}
+				};
+			xmltext = utils.jsonStringify (jstruct);
+			break;
+		}
 	return (xmltext);
 	}
-function getFaultXml (err) {
+function getFaultXml (err, format) {
 	var xmltext = "", indentlevel = "";
 	function add (s) {
 		xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
@@ -92,15 +117,25 @@ function getFaultXml (err) {
 		faultCode: 1,
 		faultString: err.message
 		};
-	add ("<?xml version=\"1.0\"?>");
-	add ("<methodResponse>"); indentlevel++;
-	add ("<fault>"); indentlevel++;
-	add ("<value>"); indentlevel++;
-	add (getJavaScriptValue (theStruct));
-	add ("</value>"); indentlevel--;
-	add ("</fault>"); indentlevel--;
-	add ("</methodResponse>"); indentlevel--;
-	return (xmltext);
+	switch (format) {
+		case "xml": case undefined:
+			add ("<?xml version=\"1.0\"?>");
+			add ("<methodResponse>"); indentlevel++;
+			add ("<fault>"); indentlevel++;
+			add ("<value>"); indentlevel++;
+			add (getJavaScriptValue (theStruct));
+			add ("</value>"); indentlevel--;
+			add ("</fault>"); indentlevel--;
+			add ("</methodResponse>"); indentlevel--;
+			return (xmltext);
+		case "json":
+			var jstruct = {
+				methodResponse: {
+					fault: theStruct
+					}
+				};
+			return (utils.jsonStringify (jstruct));
+		}
 	}
 function xmlRpcBuildCall (verb, params) {
 	var xmltext = "", indentlevel = "";
@@ -267,36 +302,32 @@ function xmlRpcClient (urlEndpoint, verb, params, callback) {
 		});
 	}
 function xmlRpcServer (xmltext, callback) {
-	var options = {
-		explicitArray: false
-		};
-	xml2js.parseString (xmltext, options, function (err, jstruct) {
-		function badCall (whereBad) {
-			console.log ("badCall: whereBad == " + whereBad);
-			var err = {
-				message: "Bad XML-RPC call, missing \"" + whereBad + "\" element."
-				};
+	function badCall (whereBad) {
+		console.log ("badCall: whereBad == " + whereBad);
+		var err = {
+			message: "Bad XML-RPC call, missing \"" + whereBad + "\" element."
+			};
+		callback (err);
+		}
+	if (config.flProcessJsonRpcCalls && (firstNonWhitespaceChar (xmltext) == "{")) { //treat it as JSON -- 6/3/18 by DW
+		var jstruct, methodCall = undefined, verb = undefined;
+		try {
+			jstruct = JSON.parse (xmltext);
+			methodCall = jstruct.methodCall;
+			}
+		catch (err) {
 			callback (err);
 			}
-		
-		
-		
-		var methodCall = jstruct.methodCall, verb = undefined, params = new Array ();
 		if (methodCall !== undefined) {
 			verb = methodCall.methodName;
 			if (verb !== undefined) {
 				if (methodCall.params !== undefined) {
-					var param = methodCall.params.param;
-					if (param !== undefined) {
-						if (!Array.isArray (param)) {
-							param = [param];
-							}
-						for (var i = 0; i < param.length; i++) {
-							params.push (xmlRpcGetValue (param [i].value));
-							}
-						}
+					params = methodCall.params;
 					}
-				callback (undefined, verb, params);
+				else {
+					params = new Array ();
+					}
+				callback (undefined, verb, params, "json");
 				}
 			else {
 				badCall ("methodName");
@@ -305,5 +336,39 @@ function xmlRpcServer (xmltext, callback) {
 		else {
 			badCall ("methodCall");
 			}
-		});
+		}
+	else {
+		var options = {
+			explicitArray: false
+			};
+		xml2js.parseString (xmltext, options, function (err, jstruct) {
+			
+			
+			
+			var methodCall = jstruct.methodCall, verb = undefined, params = new Array ();
+			if (methodCall !== undefined) {
+				verb = methodCall.methodName;
+				if (verb !== undefined) {
+					if (methodCall.params !== undefined) {
+						var param = methodCall.params.param;
+						if (param !== undefined) {
+							if (!Array.isArray (param)) {
+								param = [param];
+								}
+							for (var i = 0; i < param.length; i++) {
+								params.push (xmlRpcGetValue (param [i].value));
+								}
+							}
+						}
+					callback (undefined, verb, params, "xml");
+					}
+				else {
+					badCall ("methodName");
+					}
+				}
+			else {
+				badCall ("methodCall");
+				}
+			});
+		}
 	}

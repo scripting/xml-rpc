@@ -157,12 +157,12 @@ function startup () {
 			function notFoundReturn () {
 				theRequest.httpReturn (404, "text/plain", "Not found.");
 				}
-			function errorReturn (err) {
-				theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultXml (err)); 
-				}
 			switch (theRequest.lowerpath) {
 				case "/rpc2":
-					xmlrpc.server (theRequest.postBody, function (err, verb, params) {
+					xmlrpc.server (theRequest.postBody, function (err, verb, params, format) {
+						function errorReturn (err) {
+							theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultXml (err, format)); 
+							}
 						if (err) {
 							errorReturn (err);
 							}
@@ -173,7 +173,7 @@ function startup () {
 									notFoundReturn ();
 									}
 								else {
-									var xmltext = xmlrpc.getReturnXml (returnValue); //translate result to XML
+									var xmltext = xmlrpc.getReturnXml (returnValue, format); //translate result to XML
 									theRequest.httpReturn (200, "text/plain", xmltext); //return the XML
 									}
 								}

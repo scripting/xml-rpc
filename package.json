@@ -3,7 +3,7 @@
 	"description": "XML-RPC client and server in JavaScript.",
 	"author": "Dave Winer <dave@smallpicture.com>",
 	"license": "MIT",
-	"version": "0.4.4",
+	"version": "0.4.10",
 	"main": "xmlrpc.js",
 	"repository": {
 		"type": "git",
