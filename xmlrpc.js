@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.15";
+var myProductName = "xmlrpc"; myVersion = "0.4.16";
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -31,7 +31,7 @@ function getXmlValue (theValue) { //xmlize a JavaScript value
 		case "string":
 			return ("<string>" + encode (theValue) + "</string>");
 		case "boolean":
-			return ("<boolean>" + theValue + "</boolean>");
+			return ("<boolean>" + utils.getBoolean (theValue) + "</boolean>");
 		case "number":
 			if (Number.isInteger (theValue)) {
 				return ("<i4>" + theValue + "</i4>");
@@ -80,9 +80,9 @@ function getXmlValue (theValue) { //xmlize a JavaScript value
 		}
 	}
 function getReturnText (theValue, format) { //get xml or json for a returned value
-	var xmltext = "", indentlevel = "";
+	var rpctext = "", indentlevel = "";
 	function add (s) {
-		xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
+		rpctext += utils.filledString ("\t", indentlevel) + s + "\n";
 		}
 	switch (format) {
 		case "xml": case undefined:
@@ -103,22 +103,22 @@ function getReturnText (theValue, format) { //get xml or json for a returned val
 					value: theValue
 					}
 				};
-			xmltext = utils.jsonStringify (jstruct);
+			rpctext = utils.jsonStringify (jstruct);
 			break;
 		}
-	return (xmltext);
+	return (rpctext);
 	}
 function getFaultText (err, format) { //get xml or json for an error return, or fault
-	var xmltext = "", indentlevel = "";
-	function add (s) {
-		xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
-		}
 	const theStruct = {
 		faultCode: 1,
 		faultString: err.message
 		};
 	switch (format) {
 		case "xml": case undefined:
+			var xmltext = "", indentlevel = "";
+			function add (s) {
+				xmltext += utils.filledString ("\t", indentlevel) + s + "\n";
+				}
 			add ("<?xml version=\"1.0\"?>");
 			add ("<methodResponse>"); indentlevel++;
 			add ("<fault>"); indentlevel++;
