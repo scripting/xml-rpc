@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.16";
+var myProductName = "xmlrpc"; myVersion = "0.4.17";
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -206,7 +206,7 @@ function xmlRpcGetValue (value) { //get a JavaScript value from an XML-specified
 				returnedValue = value [x];
 				break;
 			case "boolean":
-				returnedValue = getBoolean (value [x]);
+				returnedValue = utils.getBoolean (value [x]);
 				break;
 			case "dateTime.iso8601":
 				returnedValue = parseDate (value [x]);
@@ -411,9 +411,6 @@ function xmlRpcServer (rpctext, callback) {
 			explicitArray: false
 			};
 		xml2js.parseString (rpctext, options, function (err, jstruct) {
-			
-			
-			
 			var methodCall = jstruct.methodCall, verb = undefined, params = new Array ();
 			if (methodCall !== undefined) {
 				verb = methodCall.methodName;

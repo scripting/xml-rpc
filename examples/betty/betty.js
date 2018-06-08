@@ -124,6 +124,8 @@ function handleBettyCall (verb, params) {
 			return (getStateNames (params [0], params [1], params [2], params [3]));
 		case "examples.getStateStruct":
 			return (getStateStruct (params [0]));
+		case "examples.echoParams":
+			return (params);
 		default: 
 			throw {message: "Can't make the call because \"" + verb + "\" is not defined."};
 		}
