@@ -14,7 +14,7 @@ An XML-RPC client and server in JavaScript.
 
 It's available as davexmlrpc on NPM.
 
-``npm install davexmlrpc
+    npm install davexmlrpc
 
 Example <a href="https://github.com/scripting/xml-rpc/tree/master/examples/betty">server</a> is provided. 
 
