@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.17";
+var myProductName = "xmlrpc"; myVersion = "0.4.18";
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -176,6 +176,9 @@ function xmlRpcBuildCall (verb, params, format) {
 	
 	}
 function xmlRpcGetValue (value) { //get a JavaScript value from an XML-specified value
+	//Changes
+		//6/9/18; 1:53:14 PM by DW
+			//The XML-RPC validator found a problem -- a <struct> can be empty, i.e. has no members. It's legal. 
 	var returnedValue = undefined;
 	function parseDate (theString) {
 		var theDate = Date.parse (theString);
@@ -193,7 +196,7 @@ function xmlRpcGetValue (value) { //get a JavaScript value from an XML-specified
 	function badResponse (whereBad) {
 		console.log ("xmlRpcGetValue:badResponse: whereBad == " + whereBad);
 		var err = {
-			message: "Bad response to XML-RPC call, missing \"" + xxx + "\" element."
+			message: "Bad response to XML-RPC call, missing \"" + whereBad + "\" element."
 			};
 		callback (err);
 		}
@@ -218,12 +221,14 @@ function xmlRpcGetValue (value) { //get a JavaScript value from an XML-specified
 			case "struct":
 				returnedValue = new Object ();
 				var member = value [x].member;
-				if (!Array.isArray (member)) { //5/24/18 by DW
-					member = [member];
-					}
-				for (var i = 0; i < member.length; i++) {
-					var item = member [i];
-					returnedValue [item.name] = xmlRpcGetValue (item.value);
+				if (member !== undefined) { //6/9/18 by DW
+					if (!Array.isArray (member)) { //5/24/18 by DW
+						member = [member];
+						}
+					for (var i = 0; i < member.length; i++) {
+						var item = member [i];
+						returnedValue [item.name] = xmlRpcGetValue (item.value);
+						}
 					}
 				break;
 			case "array":
