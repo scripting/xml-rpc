@@ -86,6 +86,20 @@ If it's a list with N elements, the procedure is called with N params.
 
 If you want to call a procedure with a single param that's a list, send a list with a single element that's the list. It's the one weird case for this calling convention, and is illustrated with the third call, above.
 
+### Using JSON in place of XML
+
+The XML-RPC standard specifies using XML, of course, but in this implementation, as an experiment, you can also use JSON.
+
+When processing a request, we look at the first non-whitespace character. If it's a left curly brace, we assume treat it as JSON, not XML.
+
+I haven't written a spec for the JSONified version, but I have created a <a href="http://scripting.com/misc/xmlrpc-in-json.html">cribsheet</a> with examples that I used to guide the implementation. 
+
+Two types, &lt;base64> and &lt;dateTime.iso8601> are represented as strings. There is no way for the toolkit to know they are binary data or dates. This means that the XML and JSON versions are not exactly the same. Not sure what the implications of this will be. I wrote up the issue <a href="http://scripting.com/2018/06/10/152333.html">on Scripting News</a>.
+
+### Docs and resources
+
+I started a page at <a href="http://reboot.xmlrpc.com/">reboot.xmlrpc.com</a> with links to new stuff related to this work. 
+
 ### Questions, comments?
 
 Post an <a href="https://github.com/scripting/xml-rpc/issues">issue</a> here. 
