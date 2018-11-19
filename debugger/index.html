@@ -7,8 +7,8 @@
 <link href="http://fargo.io/code/bootstrap.css" rel="stylesheet">
 <script src="http://fargo.io/code/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="http://fargo.io/code/fontAwesome/css/font-awesome.min.css"/>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+<link rel="stylesheet" href="http://scripting.com/code/fontawesome/css/all.css">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500i,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
 
 <script src="http://fargo.io/code/node/shared/utils.js"></script>
@@ -35,6 +35,39 @@
 		
 		</head>
 	<body>
+		<div class="divMenubar" id="idMenubar">
+			<div class="topbar-wrapper" style="z-index: 5;">
+				<div class="navbar navbar-fixed-top" data-dropdown="dropdown">
+					<div class="divVersionNumber">
+						<span id="idPublishStatus"></span><span id="idSavedStatus"></span>&nbsp;<span id="idVersionNumber"></span>
+						</div>
+					<div class="navbar-inner">
+						<div class="container">
+							<a class="brand" href=""><span id="idMenuProductName"></span></a>
+							<ul class="nav" id="idMainMenuList">
+								<li class="dropdown" id="idTestsMenu"> 
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests&nbsp;<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a onclick="aboutTestsMenu ();">About this menu...</a></li>
+										<li class="divider"></li>
+										<li><a onclick="setupExample (examples.getStateName);">examples.getStateName</a></li>
+										<li><a onclick="setupExample (examples.getStateList);">examples.getStateList</a></li>
+										<li><a onclick="setupExample (examples.getStateNames);">examples.getStateNames</a></li>
+										<li><a onclick="setupExample (examples.getStateStruct);">examples.getStateStruct</a></li>
+										</ul>
+									</li>
+								<li class="dropdown" id="idDocsMenu"> 
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs&nbsp;<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="https://github.com/scripting/xml-rpc#simple-xml-rpc-debugger" target="_blank">Main docs</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		<div class="divPageBody">
 			<table>
 				<tr>
@@ -50,7 +83,7 @@
 						<div class="divDocsLink">
 							<a href="https://github.com/scripting/xml-rpc#simple-xml-rpc-debugger" target="_blank">Docs</a>
 							</div>
-						<h1>Simple <span id="idFormatInTitle">XML</span>-RPC debugger</h1>
+						<h1 class="h1TitleInPage">Simple <span id="idFormatInTitle">XML</span>-RPC debugger</h1>
 						</td>
 					</tr>
 				<tr>

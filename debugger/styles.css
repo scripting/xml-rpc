@@ -1,12 +1,22 @@
 .divPageBody {
-	margin-top: 60px;
+	margin-top: 90px;
 	margin-bottom: 600px;
 	width: 60%;
 	margin-left: auto;
 	margin-right: auto;
 	}
-h1 {
+.navbar {
+	margin-top: -20px;
+	}
+ #idMenuProductName {
+	font-size: 26px;
+	}
+.h1TitleInPage {
+	display: none;
 	margin-bottom: 10px;
+	}
+.divDocsLink {
+	display: none;
 	}
 .divConfigSetting {
 	margin-bottom: 10px;

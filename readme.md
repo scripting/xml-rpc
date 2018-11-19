@@ -90,7 +90,7 @@ If you want to call a procedure with a single param that's a list, send a list w
 
 The XML-RPC standard specifies using XML, of course, but in this implementation, as an experiment, you can also use JSON.
 
-When processing a request, we look at the first non-whitespace character. If it's a left curly brace, we assume treat it as JSON, not XML.
+When processing a request, we look at the first non-whitespace character. If it's a left curly brace, we treat it as JSON, not XML.
 
 I haven't written a spec for the JSONified version, but I have created a <a href="http://scripting.com/misc/xmlrpc-in-json.html">cribsheet</a> with examples that I used to guide the implementation. 
 
