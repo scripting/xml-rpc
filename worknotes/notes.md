@@ -1,1 +1,1 @@
-* 11/18/18; 2:19:25 PM by DW   * work on the debugger      * add menu bar so there's room for more functionality      * &nbsp;* 11/1/18; 1:16:07 PM by DW   * docs      * Comparting XML-RPC sytax in XML and JSON with examples   * Getting started.
+* 11/19/18; 12:35:24 PM by DW   * &nbsp;   * get undiscombobulated   * &nbsp;   * &nbsp;   * work on the debugger      * add menu bar so there's room for more functionality* 11/1/18; 1:16:07 PM by DW   * docs      * Comparting XML-RPC sytax in XML and JSON with examples   * Getting started.
