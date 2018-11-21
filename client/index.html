@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>XML-RPC test app</title>
+		<title>XML-RPC test suite</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
@@ -19,7 +19,19 @@
 		</head>
 	<body>
 		<div class="divPageBody">
-			<center><p>Open the JavaScript console to see the result of each of the XML-RPC calls.</p></center>
+			
+			
+			
+			
+			<p>Enter the URL of your test server, press the button and we'll make six calls to your server.</p>
+			<button class="btn btn-large btnRun" type="button" id="idTestButton" onclick="testsButtonClick ();">
+				Run Test
+				</button>
+			<input type="text" class="xlarge itemEndpointEnter" size="70" maxlength="300" id="idEndpointUrl" placeholder="Enter the URL of your XML-RPC server here.">
+			<div class="divTests" id="idTests">
+				</div>
+			<p" id="idResult">
+				</p>
 			</div>
 		<script>
 			$(document).ready (function () {

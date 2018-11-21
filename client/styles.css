@@ -4,8 +4,37 @@ body {
 	background-color: whitesmoke;
 	}
 .divPageBody {
-	width: 60%;
+	width: 65%;
 	margin-top: 90px;
 	margin-left: auto;
 	margin-right: auto;
+	}
+.divTests {
+	margin-top: 10px;
+	margin-bottom: 25px;
+	}
+.divTests td {
+	font-size: 28px;
+	padding: 10px;
+	padding-left: 5;
+	padding-right: 20;
+	}
+.iError {
+	color: red;
+	}
+.iOK {
+	color: green;
+	}
+.itemEndpointEnter {
+	margin-top: 15px;
+	font-size: 28px !important;
+	height: 48px !important;
+	width: 80%;
+	}
+.btnRun {
+	float: right;
+	margin-top: 16px;
+	}
+p {
+	line-height: 140%;
 	}

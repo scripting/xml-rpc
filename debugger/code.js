@@ -1,5 +1,6 @@
 var appConsts = {
-	productnameForDisplay: "XML-RPC Debugger"
+	productnameForDisplay: "XML-RPC Debugger",
+	version: "0.4.2"
 	}
 var config = {
 	urlEndpoint: "http://betty.userland.com/RPC2",
@@ -78,23 +79,31 @@ function callButtonClick () {
 	function fixTabs (s) {
 		return (replaceAll (s, "\t", "   "));
 		}
+	function reportError (message) {
+		alertDialog ("Error: " + message + ".");
+		}
 	$("#idCallButton").blur (); 
 	getConfigFromForm ();
-	var params = eval (JSON.parse (config.params));
-	xmlRpcClient (config.urlEndpoint, config.verb, params, config.format, function (err, value, xmlForCall, xmlResponse) {
-		$("#idXmlCall").text (fixTabs (xmlForCall));
-		if (err) {
-			console.log (err.message);
-			$("#idResponse").html ("<span class=\"spErrorMessage\">" + err.message + "</span>");
-			}
-		else {
-			let jsontext = jsonStringify (value);
-			console.log (jsontext);
-			$("#idResponse").text (jsontext);
-			$("#idError").text ("");
-			}
-		$("#idXmlResponse").text (fixTabs (xmlResponse));
-		});
+	try {
+		var params = eval (JSON.parse (config.params));
+		xmlRpcClient (config.urlEndpoint, config.verb, params, config.format, function (err, value, xmlForCall, xmlResponse) {
+			$("#idXmlCall").text (fixTabs (xmlForCall));
+			if (err) {
+				console.log (err.message);
+				$("#idResponse").html ("<span class=\"spErrorMessage\">" + err.message + "</span>");
+				}
+			else {
+				let jsontext = jsonStringify (value);
+				console.log (jsontext);
+				$("#idResponse").text (jsontext);
+				$("#idError").text ("");
+				}
+			$("#idXmlResponse").text (fixTabs (xmlResponse));
+			});
+		}
+	catch (err) {
+		reportError (err.message);
+		}
 	}
 function startup () {
 	console.log ("startup");
