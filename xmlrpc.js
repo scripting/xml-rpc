@@ -1,13 +1,15 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.18"; 
+var myProductName = "xmlrpc"; myVersion = "0.4.19"; 
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
 exports.buildCall = xmlRpcBuildCall; 
 exports.getReturnText = getReturnText;
 exports.getFaultText = getFaultText;
+exports.startServerOverHttp = startServerOverHttp;
 
 const xml2js = require ("xml2js");
 const request = require ("request");
+const davehttp = require ("davehttp");
 const utils = require ("daveutils");
 
 const config = {
@@ -442,4 +444,57 @@ function xmlRpcServer (rpctext, callback) {
 				}
 			});
 		}
+	}
+function startServerOverHttp (config, callback) { //9/3/19 by DW
+	davehttp.start (config, function (theRequest) {
+		switch (theRequest.lowerpath) {
+			case config.xmlRpcPath:
+				xmlRpcServer (theRequest.postBody, function (err, verb, params) {
+					function returnXml (xval) {
+						var xmltext = getReturnText (xval);
+						var headers = {
+							"Content-Length": xmltext.length
+							};
+						theRequest.httpReturn (200, "text/xml", xmltext, headers);
+						}
+					function returnErrorXml (xval) {
+						console.log ("returnErrorXml: xval == " + utils.jsonStringify (xval));
+						theRequest.httpReturn (500, "text/xml", getFaultText (xval));
+						}
+					function httpReturnXml (err, xval) {
+						if (err) {
+							returnErrorXml (err);
+							}
+						else {
+							returnXml (xval);
+							}
+						}
+					if (err) {
+						returnErrorXml (err);
+						}
+					else {
+						function listParams (params) {
+							var s = "";
+							params.forEach (function (param) {
+								s += "\"" + param + "\", ";
+								});
+							s = utils.stringMid (s, 1, s.length - 2);
+							return (s);
+							}
+							
+							
+						console.log (verb + " (" + listParams (params) + ")");
+						var xmlRpcRequest = {
+							verb: verb,
+							params: params,
+							returnVal: httpReturnXml, //function that returns the result of the xml-rpc call
+							httpRequest: theRequest //include a copy of the low-level request
+							};
+						return (callback (xmlRpcRequest)); //returns true if handled, false if not
+						}
+					});
+				return;
+			}
+		theRequest.httpReturn (404, "text/plain", "Not found.");
+		});
 	}
