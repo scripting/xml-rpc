@@ -1,7 +1,8 @@
-const xmlrpc = require ("./lib/xmlrpc.js");
+const xmlrpc = require ("davexmlrpc");
 const utils = require ("daveutils");
 const davehttp = require ("davehttp"); 
 const mail = require ("davemail");
+const persists = require ("persists");
 const fs = require ("fs");
 
 var config = {
@@ -9,44 +10,12 @@ var config = {
 	flPostEnabled: true,
 	flLogToConsole: true, 
 	xmlRpcPath: "/rpc2",
-	archiveFolder: "data/archive/",
-	fnameStats: "data/stats.json"
+	archiveFolder: "data/archive/"
 	}
-var stats = {
+const initialStats = {
 	fileSerialnum: 0
 	};
-var flStatsChanged = false;
-
-function statsChanged () {
-	flStatsChanged = true;
-	}
-function readStats (callback) {
-	fs.readFile (config.fnameStats, function (err, data) {
-		if (!err) {
-			try {
-				var jstruct = JSON.parse (data);
-				for (var x in jstruct) {
-					stats [x] = jstruct [x];
-					}
-				}
-			catch (err) {
-				}
-			}
-		callback ();
-		});
-	}
-function everySecond () {
-	if (flStatsChanged) {
-		flStatsChanged = false;
-		utils.sureFilePath (config.fnameStats, function () {
-			fs.writeFile (config.fnameStats, utils.jsonStringify (stats), function (err) {
-				});
-			});
-		}
-	}
-
-setInterval (everySecond, 1000); 
-readStats (function () {
+persists ("stats", initialStats, undefined, function (stats) {
 	xmlrpc.startServerOverHttp (config, function (xmlRpcRequest) {
 		function mailSend (params, callback) {
 			var recipient = params [0];
@@ -64,7 +33,6 @@ readStats (function () {
 					obj.err = err;
 					}
 				var f = config.archiveFolder + utils.getDatePath (now) + utils.padWithZeros (stats.fileSerialnum++, 4) + ".json";
-				statsChanged ();
 				utils.sureFilePath (f, function () {
 					fs.writeFile (f, utils.jsonStringify (obj), function (err) {
 						});
@@ -79,5 +47,3 @@ readStats (function () {
 		return (false); //we didn't handle it
 		});
 	});
-
-
