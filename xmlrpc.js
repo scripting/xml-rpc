@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.20"; 
+var myProductName = "xmlrpc"; myVersion = "0.4.21"; 
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -483,7 +483,6 @@ function startServerOverHttp (config, callback) { //9/3/19 by DW
 							}
 							
 							
-						console.log (verb + " (" + listParams (params) + ")");
 						var xmlRpcRequest = {
 							verb: verb,
 							params: params,

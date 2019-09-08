@@ -10,6 +10,36 @@ An XML-RPC client and server in JavaScript.
 
 * Written by one of the <a href="http://scripting.com/?tab=about">designers</a> of the protocol.
 
+### Example
+
+Here's a simple XML-RPC server. 
+
+<pre>const xmlrpc = require ("davexmlrpc");
+var config = {
+	port: 1417,
+	flPostEnabled: true,
+	flLogToConsole: true, 
+	xmlRpcPath: "/rpc2"
+	}
+xmlrpc.startServerOverHttp (config, function (xmlRpcRequest) {
+	switch (xmlRpcRequest.verb) {
+		case "uppercase":
+			if (xmlRpcRequest.params.length > 0) {
+				xmlRpcRequest.returnVal (undefined, xmlRpcRequest.params [0].toUpperCase ());
+				}
+			else {
+				xmlRpcRequest.returnVal ({message: "There must be at least one parameter."});
+				}
+			return (true); //we handled it
+		}
+	return (false); //we didn't handle it
+	});
+</pre>
+
+Here's an pseudo-code that calls this service. 
+
+["xmlrpc://localhost:1417/rpc2"].uppercase ("this is a test")
+
 ### Client and server for Node.js
 
 It's available as davexmlrpc on NPM.
