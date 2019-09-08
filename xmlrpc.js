@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.21"; 
+var myProductName = "xmlrpc"; myVersion = "0.4.22"; 
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -446,6 +446,22 @@ function xmlRpcServer (rpctext, callback) {
 		}
 	}
 function startServerOverHttp (config, callback) { //9/3/19 by DW
+	if (config === undefined) {
+		config = {
+			};
+		}
+	if (config.flPostEnabled === undefined) { //xml-rpc uses HTTP POST
+		config.flPostEnabled = true;
+		}
+	if (config.xmlRpcPath === undefined) { 
+		config.xmlRpcPath = "/rpc2";
+		}
+	if (config.port === undefined) { 
+		config.port = 1400;
+		}
+	if (config.flLogToConsole === undefined) { 
+		config.flLogToConsole = true
+		}
 	davehttp.start (config, function (theRequest) {
 		switch (theRequest.lowerpath) {
 			case config.xmlRpcPath:
