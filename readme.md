@@ -12,6 +12,24 @@ An XML-RPC client and server in JavaScript.
 
 ### Example
 
+Here's a sample Node app that makes an XML-RPC call.
+
+<pre>const xmlrpc = require ("davexmlrpc");
+
+const urlserver = "http://betty.userland.com/rpc2";
+
+xmlrpc.client (urlserver, "examples.getStateName", [5], "xml", function (err, data) {
+	if (err) {
+		console.log ("err.message == " + err.message);
+		}
+	else {
+		console.log (JSON.stringify (data));
+		}
+	});
+</pre>
+
+### Example
+
 Here's a simple XML-RPC server. 
 
 <pre>const xmlrpc = require ("davexmlrpc");
