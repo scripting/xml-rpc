@@ -14,6 +14,15 @@ var config = {
 	}
 var stats;
 
+function initStats (callback) {
+	const initialStats = {
+		fileSerialnum: 0
+		};
+	persists ("stats", initialStats, undefined, function (sharedObject) {
+		stats = sharedObject;
+		callback ();
+		});
+	}
 function mailSend (params, callback) {
 	var recipient = params [0];
 	var title = params [1];
@@ -34,15 +43,6 @@ function mailSend (params, callback) {
 			fs.writeFile (f, utils.jsonStringify (obj), function (err) {
 				});
 			});
-		});
-	}
-function initStats (callback) {
-	const initialStats = {
-		fileSerialnum: 0
-		};
-	persists ("stats", initialStats, undefined, function (sharedObject) {
-		stats = sharedObject;
-		callback ();
 		});
 	}
 
