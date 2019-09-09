@@ -10,9 +10,9 @@ An XML-RPC client and server in JavaScript.
 
 * Written by one of the <a href="http://scripting.com/?tab=about">designers</a> of the protocol.
 
-### Example
+### Example client
 
-Here's a sample Node app that makes an XML-RPC call.
+Here's a simple XML-RPC call.
 
 <pre>const xmlrpc = require ("davexmlrpc");
 
@@ -28,7 +28,15 @@ xmlrpc.client (urlserver, "examples.getStateName", [5], "xml", function (err, da
 	});
 </pre>
 
-### Example
+It sends a call to the demo server, betty.userland.com. 
+
+The procedure it calls is "examples.getStateName," with a singler parameter, the number 5.
+
+The call will be made in XML (it could also use JSON if it knows the server supports it). 
+
+When the server returns, the callback receives the standard Node error struct in the first param, and if there was no error, the data in the second parameter.
+
+### Example server
 
 Here's a simple XML-RPC server. 
 
@@ -56,7 +64,7 @@ xmlrpc.startServerOverHttp (config, function (xmlRpcRequest) {
 
 Here's an pseudo-code that calls this service. It returns THIS IS A TEST.
 
-["xmlrpc://localhost:1417/rpc2"].uppercase ("this is a test")
+<pre>["xmlrpc://localhost:1417/rpc2"].uppercase ("this is a test")</pre>
 
 ### Client and server for Node.js
 
