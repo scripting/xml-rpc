@@ -2,25 +2,17 @@
 
 An XML-RPC client and server in JavaScript.
 
-* Client and server for Node.js.
+* Client and server <a href="https://www.npmjs.com/package/davexmlrpc">for Node.js</a>.
 
-* Client for the browser.
+* Client for the <a href="https://github.com/scripting/xml-rpc/tree/master/client">browser</a>.
 
 * Pure JavaScript.
 
 * Written by one of the <a href="http://scripting.com/?tab=about">designers</a> of the protocol.
 
-### Client and server for Node.js
-
-It's available as <a href="https://www.npmjs.com/package/davexmlrpc">davexmlrpc</a> on NPM.
-
-`npm install davexmlrpc`
-
-Example code for browser is <a href="https://github.com/scripting/xml-rpc/tree/master/client">here</a>.
-
 ### Example client
 
-Here's a simple XML-RPC call.
+Here's code that makes a simple XML-RPC call.
 
 <pre>const xmlrpc = require ("davexmlrpc");
 
@@ -38,15 +30,15 @@ xmlrpc.client (urlserver, "examples.getStateName", [5], "xml", function (err, da
 
 It sends a call to the demo server, betty.userland.com. 
 
-The procedure it calls is "examples.getStateName," with a singler parameter, the number 5.
+The procedure it calls is "examples.getStateName," with a single parameter, the number 5.
 
-The call will be made in XML (it could also use JSON if it knows the server supports it). 
+The call will be made in XML (it could also use JSON if we know the server supports it). 
 
-When the server returns, the callback receives the standard Node error struct in the first param, and if there was no error, the data in the second parameter.
+When the server returns, the callback receives the standard Node error object in the first param, and if there was no error, the data returned through XML-RPC in the second parameter.
 
 ### Example server
 
-Here's a simple XML-RPC server. 
+Here's the code for a simple XML-RPC server. 
 
 <pre>const xmlrpc = require ("davexmlrpc");
 
@@ -55,14 +47,14 @@ var config = {
 	xmlRpcPath: "/rpc2"
 	}
 
-xmlrpc.startServerOverHttp (config, function (xmlRpcRequest) {
-	switch (xmlRpcRequest.verb) {
+xmlrpc.startServerOverHttp (config, function (request) {
+	switch (request.verb) {
 		case "uppercase":
-			if (xmlRpcRequest.params.length > 0) {
-				xmlRpcRequest.returnVal (undefined, xmlRpcRequest.params [0].toUpperCase ());
+			if (request.params.length > 0) {
+				request.returnVal (undefined, request.params [0].toUpperCase ());
 				}
 			else {
-				xmlRpcRequest.returnVal ({message: "There must be at least one parameter."});
+				request.returnVal ({message: "There must be at least one parameter."});
 				}
 			return (true); //we handled it
 		}
