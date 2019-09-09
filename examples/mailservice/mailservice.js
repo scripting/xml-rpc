@@ -13,6 +13,7 @@ var config = {
 	archiveFolder: "data/archive/"
 	}
 var stats;
+
 function mailSend (params, callback) {
 	var recipient = params [0];
 	var title = params [1];
@@ -44,6 +45,7 @@ function initStats (callback) {
 		callback ();
 		});
 	}
+
 initStats (function () {
 	xmlrpc.startServerOverHttp (config, function (xmlRpcRequest) {
 		switch (xmlRpcRequest.verb) {
