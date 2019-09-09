@@ -14,8 +14,14 @@ An XML-RPC client and server in JavaScript.
 
 Here's a simple XML-RPC server. 
 
-<pre>const xmlrpc = require ("../../xmlrpc.js");
-xmlrpc.startServerOverHttp (undefined, function (xmlRpcRequest) {
+<pre>const xmlrpc = require ("davexmlrpc");
+
+var config = {
+	port: 1417,
+	xmlRpcPath: "/rpc2"
+	}
+
+xmlrpc.startServerOverHttp (config, function (xmlRpcRequest) {
 	switch (xmlRpcRequest.verb) {
 		case "uppercase":
 			if (xmlRpcRequest.params.length > 0) {
@@ -32,7 +38,7 @@ xmlrpc.startServerOverHttp (undefined, function (xmlRpcRequest) {
 
 Here's an pseudo-code that calls this service. It returns THIS IS A TEST.
 
-["xmlrpc://localhost:1400/rpc2"].uppercase ("this is a test")
+["xmlrpc://localhost:1417/rpc2"].uppercase ("this is a test")
 
 ### Client and server for Node.js
 
