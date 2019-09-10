@@ -14,7 +14,7 @@ body {
 	margin-bottom: 25px;
 	}
 .divTests td {
-	font-size: 28px;
+	font-size: 22px;
 	padding: 10px;
 	padding-left: 5;
 	padding-right: 20;
@@ -27,7 +27,7 @@ body {
 	}
 .itemEndpointEnter {
 	margin-top: 15px;
-	font-size: 28px !important;
+	font-size: 22px !important;
 	height: 48px !important;
 	width: 80%;
 	}
