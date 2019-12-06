@@ -110,15 +110,9 @@ If no type is indicated, the type is string.
 
 ### &lt;struct>s
 
-
-
 A value can also be of type &lt;struct>.
 
-
-
 A &lt;struct> contains &lt;member>s and each &lt;member> contains a &lt;name> and a &lt;value>. 
-
-
 
 Here's an example of a two-element &lt;struct>:
 
@@ -126,57 +120,21 @@ Here's an example of a two-element &lt;struct>:
 
 &lt;struct>s can be recursive, any &lt;value> may contain a &lt;struct> or any other type, including an &lt;array>, described below.
 
-
-
 ### &lt;array>s
-
-
 
 A value can also be of type &lt;array>.
 
-
-
 An &lt;array> contains a single &lt;data> element, which can contain any number of &lt;value>s.
-
-
 
 Here's an example of a four-element array:
 
-
-
-<pre>
-
-&lt;array>
-
-&lt;data>
-
-&lt;value>&lt;i4>12&lt;/i4>&lt;/value>
-
-&lt;value>&lt;string>Egypt&lt;/string>&lt;/value>
-
-&lt;value>&lt;boolean>0&lt;/boolean>&lt;/value>
-
-&lt;value>&lt;i4>-31&lt;/i4>&lt;/value>
-
-&lt;/data>
-
-&lt;/array>
-
-</pre>
-
-
+```xml<array>	<data>		<value><i4>12</i4></value>		<value><string>Egypt</string></value>		<value><boolean>0</boolean></value>		<value><i4>-31</i4></value>		</data>	</array>```
 
 &lt;array> elements do not have names. 
 
-
-
 You can mix types as the example above illustrates.
 
-
-
 &lt;arrays>s can be recursive, any value may contain an &lt;array> or any other type, including a &lt;struct>, described above.
-
-
 
 ### Response example
 
