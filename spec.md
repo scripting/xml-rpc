@@ -122,33 +122,7 @@ A &lt;struct> contains &lt;member>s and each &lt;member> contains a &lt;name> an
 
 Here's an example of a two-element &lt;struct>:
 
-
-
-<pre>
-
-&lt;struct>
-
-&lt;member>
-
-&lt;name>lowerBound&lt;/name>
-
-&lt;value>&lt;i4>18&lt;/i4>&lt;/value>
-
-&lt;/member>
-
-&lt;member>
-
-&lt;name>upperBound&lt;/name>
-
-&lt;value>&lt;i4>139&lt;/i4>&lt;/value>
-
-&lt;/member>
-
-&lt;/struct>
-
-</pre>
-
-
+```xml<struct>	<member>		<name>lowerBound</name>		<value><i4>18</i4></value>		</member>	<member>		<name>upperBound</name>		<value><i4>139</i4></value>		</member>	</struct>```
 
 &lt;struct>s can be recursive, any &lt;value> may contain a &lt;struct> or any other type, including an &lt;array>, described below.
 
