@@ -69,16 +69,6 @@ Here's pseudo-code that calls this service. It returns THIS IS A TEST.
 
 <pre>["xmlrpc://localhost:1417/rpc2"].uppercase ("this is a test")</pre>
 
-### Please help test for interop
-
-If you're running XML-RPC in your world, could you try testing against the server 
-
-I have running at betty.scripting.com. The server is accessible through port 80. The calls it handles are exactly the ones handled by the userland version of the test server. Demo <a href="https://github.com/scripting/xml-rpc/blob/master/client/code.js">code</a> that calls the actual server is provided, in JavaScript.
-
-The goal is to replace betty.userland.com with the one running here. But only after enough testing to be confident that it makes a good reference server. 
-
-If you have success, or find problems, please post a note in the <a href="https://github.com/scripting/xml-rpc/issues">issues section</a> here. Thanks!
-
 ### Simple XML-RPC debugger
 
 I've put up a <a href="http://scripting.com/code/xmlrpcdebugger/">simple app</a> that lets you try calling an XML-RPC procedure from an HTML form, where you supply the URL of the endpoint, the verb you want to call, and its parameters as a JavaScript expression. 
@@ -105,7 +95,7 @@ If you open the JavaScript console, you'll see the actual XML-RPC cals, in XML, 
 
 ### How params work in the xmlRpcClient
 
-The third param to the xmlRpcClient routine is either a value or a list of values.
+The third param to the xmlRpcClient function is either a value or a list of values.
 
 If it's a value, the XML-RPC procedure is called with a single parameter.
 
@@ -122,6 +112,16 @@ When processing a request, we look at the first non-whitespace character. If it'
 I haven't written a spec for the JSONified version, but I have created a <a href="http://scripting.com/misc/xmlrpc-in-json.html">cribsheet</a> with examples that I used to guide the implementation. 
 
 Two types, &lt;base64> and &lt;dateTime.iso8601> are represented as strings. There is no way for the toolkit to know they are binary data or dates. This means that the XML and JSON versions are not exactly the same. Not sure what the implications of this will be. I wrote up the issue <a href="http://scripting.com/2018/06/10/152333.html">on Scripting News</a>.
+
+### Please help test for interop
+
+If you're running XML-RPC in your world, could you try testing against the server 
+
+I have running at betty.scripting.com. The server is accessible through port 80. The calls it handles are exactly the ones handled by the userland version of the test server. Demo <a href="https://github.com/scripting/xml-rpc/blob/master/client/code.js">code</a> that calls the actual server is provided, in JavaScript.
+
+The goal is to replace betty.userland.com with the one running here. But only after enough testing to be confident that it makes a good reference server. 
+
+If you have success, or find problems, please post a note in the <a href="https://github.com/scripting/xml-rpc/issues">issues section</a> here. Thanks!
 
 ### Docs and resources
 
