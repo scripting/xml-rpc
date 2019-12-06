@@ -28,9 +28,19 @@ Procedure parameters can be scalars, numbers, strings, dates, etc.; and can also
 
 Here's an example of an XML-RPC request:
 
-<code>
+```
 
-POST /RPC2 HTTP/1.0<br>User-Agent: Frontier/5.1.2 (WinNT)<br>Host: betty.userland.com<br>Content-Type: text/xml<br>Content-length: 181
+POST /RPC2 HTTP/1.0
+
+User-Agent: Frontier/5.1.2 (WinNT)
+
+Host: betty.userland.com
+
+Content-Type: text/xml
+
+Content-length: 181
+
+
 
 &lt;?xml version="1.0"?>
 
@@ -50,7 +60,7 @@ POST /RPC2 HTTP/1.0<br>User-Agent: Frontier/5.1.2 (WinNT)<br>Host: betty.userlan
 
 &lt;/methodCall>
 
-</code>
+```
 
 
 
