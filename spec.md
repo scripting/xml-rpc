@@ -23,22 +23,22 @@ Procedure parameters can be scalars, numbers, strings, dates, etc.; and can also
 Here's an example of an XML-RPC request:
 
 ```xml
-POST /RPC2 HTTP/1.0
-User-Agent: Frontier/5.1.2 (WinNT)
-Host: betty.userland.com
-Content-Type: text/xml
-Content-length: 181
-
-<?xml version="1.0"?>
-<methodCall>
-<methodName>examples.getStateName</methodName>
-<params>
-<param>
-<value><i4>41</i4></value>
-</param>
-</params>
-</methodCall>
-```
+		POST /RPC2 HTTP/1.0
+		User-Agent: Frontier/5.1.2 (WinNT)
+		Host: betty.userland.com
+		Content-Type: text/xml
+		Content-length: 181
+		
+		<?xml version="1.0"?>
+		<methodCall>
+			<methodName>examples.getStateName</methodName>
+			<params>
+				<param>
+					<value><i4>41</i4></value>
+					</param>
+				</params>
+			</methodCall>
+		```
 
 ### Header requirements
 
