@@ -138,129 +138,25 @@ You can mix types as the example above illustrates.
 
 ### Response example
 
-
-
 Here's an example of a response to an XML-RPC request:
 
-
-
-<pre>
-
-HTTP/1.1 200 OK
-
-Connection: close
-
-Content-Length: 158
-
-Content-Type: text/xml
-
-Date: Fri, 17 Jul 1998 19:55:08 GMT
-
-Server: UserLand Frontier/5.1.2-WinNT
-
-
-
-&lt;?xml version="1.0"?>
-
-&lt;methodResponse>
-
-&lt;params>
-
-&lt;param>
-
-&lt;value>&lt;string>South Dakota&lt;/string>&lt;/value>
-
-&lt;/param>
-
-&lt;/params>
-
-&lt;/methodResponse>
-
-</pre>
-
-
+```xmlHTTP/1.1 200 OKConnection: closeContent-Length: 158Content-Type: text/xmlDate: Fri, 17 Jul 1998 19:55:08 GMTServer: UserLand Frontier/5.1.2-WinNT<?xml version="1.0"?><methodResponse>	<params>		<param>			<value><string>South Dakota</string></value>			</param>		</params>	</methodResponse>```
 
 ### Response format
 
-
-
 Unless there's a lower-level error, always return 200 OK.
-
-
 
 The Content-Type is text/xml. Content-Length must be present and correct.
 
-
-
 The body of the response is a single XML structure, a &lt;methodResponse>, which can contain a single &lt;params> which contains a single &lt;param> which contains a single &lt;value>.
-
-
 
 <a name="faults"></a>The &lt;methodResponse> could also contain a &lt;fault> which contains a &lt;value> which is a &lt;struct> containing two elements, one named &lt;faultCode>, an &lt;int> and one named &lt;faultString>, a &lt;string>.
 
-
-
 A &lt;methodResponse> can not contain both a &lt;fault> and a &lt;params>.
-
-
 
 ### Fault example
 
-
-
-<pre>
-
-HTTP/1.1 200 OK
-
-Connection: close
-
-Content-Length: 426
-
-Content-Type: text/xml
-
-Date: Fri, 17 Jul 1998 19:55:02 GMT
-
-Server: UserLand Frontier/5.1.2-WinNT
-
-
-
-&lt;?xml version="1.0"?>
-
-&lt;methodResponse>
-
-&lt;fault>
-
-&lt;value>
-
-&lt;struct>
-
-&lt;member>
-
-&lt;name>faultCode&lt;/name>
-
-&lt;value>&lt;int>4&lt;/int>&lt;/value>
-
-&lt;/member>
-
-&lt;member>
-
-&lt;name>faultString&lt;/name>
-
-&lt;value>&lt;string>Too many parameters.&lt;/string>&lt;/value>
-
-&lt;/member>
-
-&lt;/struct>
-
-&lt;/value>
-
-&lt;/fault>
-
-&lt;/methodResponse>
-
-</pre>
-
-
+```xmlHTTP/1.1 200 OKConnection: closeContent-Length: 426Content-Type: text/xmlDate: Fri, 17 Jul 1998 19:55:02 GMTServer: UserLand Frontier/5.1.2-WinNT<?xml version="1.0"?><methodResponse>	<fault>		<value>			<struct>				<member>					<name>faultCode</name>					<value><int>4</int></value>					</member>				<member>					<name>faultString</name>					<value><string>Too many parameters.</string></value>					</member>				</struct>			</value>		</fault>	</methodResponse>```
 
 ### <a name="goals">Strategies/Goals</a>
 
