@@ -1,14 +1,8 @@
-## XML-RPC Specification
-
 <i>Tue, Jun 15, 1999; by Dave Winer.</i>
 
-<i><a href="#update3">Updated 6/30/03 DW</a></i>
+# XML-RPC Specification
 
-<i><a href="#update2">Updated 10/16/99 DW</a></i>
-
-<i><a href="#update1">Updated 1/21/99 DW</a></i>
-
-
+<i><a href="#update3">Updated 6/30/03 DW</a></i><br><i><a href="#update2">Updated 10/16/99 DW</a></i><br><i><a href="#update1">Updated 1/21/99 DW</a></i>
 
 This specification documents the XML-RPC protocol implemented in <a href="http://frontier.userland.com/">UserLand Frontier</a> 5.1. 
 
@@ -32,25 +26,11 @@ Procedure parameters can be scalars, numbers, strings, dates, etc.; and can also
 
 ### Request example
 
-
-
 Here's an example of an XML-RPC request:
 
+<code>
 
-
-<pre>
-
-POST /RPC2 HTTP/1.0
-
-User-Agent: Frontier/5.1.2 (WinNT)
-
-Host: betty.userland.com
-
-Content-Type: text/xml
-
-Content-length: 181
-
-
+POST /RPC2 HTTP/1.0<br>User-Agent: Frontier/5.1.2 (WinNT)<br>Host: betty.userland.com<br>Content-Type: text/xml<br>Content-length: 181
 
 &lt;?xml version="1.0"?>
 
@@ -70,7 +50,7 @@ Content-length: 181
 
 &lt;/methodCall>
 
-</pre>
+</code>
 
 
 
