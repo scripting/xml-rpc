@@ -1,6 +1,12 @@
-# XML-RPC
+# What is XML-RPC? 
 
-An XML-RPC client and server in JavaScript.
+It's a spec and a set of implementations that allow software running on disparate operating systems, running in different environments to make procedure calls over the Internet.
+
+It's remote procedure calling using HTTP as the transport and XML as the encoding. XML-RPC is designed to be as simple as possible, while allowing complex data structures to be transmitted, processed and returned.
+
+### JavaScript implementation
+
+Starting in 2019, there's a new implementation of XML-RPC in JavaScript.
 
 * Client and server <a href="https://www.npmjs.com/package/davexmlrpc">for Node.js</a>.
 
@@ -9,6 +15,8 @@ An XML-RPC client and server in JavaScript.
 * Pure JavaScript.
 
 * Written by one of the <a href="http://scripting.com/?tab=about">designers</a> of the protocol.
+
+The <a href="http://1998.xmlrpc.com/">original site</a>, dating back to 1998, is preserved. 
 
 ### Example client
 
@@ -123,9 +131,17 @@ The goal is to replace betty.userland.com with the one running here. But only af
 
 If you have success, or find problems, please post a note in the <a href="https://github.com/scripting/xml-rpc/issues">issues section</a> here. Thanks!
 
-### Docs and resources
+### How to participate
 
 I started a page at <a href="http://reboot.xmlrpc.com/">reboot.xmlrpc.com</a> with links to new stuff related to this work. 
+
+Read Eric Kidd's fantastic <a href="http://xmlrpc-c.sourceforge.net/xmlrpc-howto/xmlrpc-howto.html">XML-RPC HowTo</a>.
+
+Test your implementation on the XML-RPC Validator page.
+
+### Lest anyone forget 
+
+The first implementation of XML-RPC was in <a href="http://frontier.userland.com/stories/storyReader$101">Frontier</a>, in April 1998. 
 
 ### Questions, comments?
 

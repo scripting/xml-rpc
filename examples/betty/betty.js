@@ -169,9 +169,6 @@ function handleBettyCall (verb, params) {
 	stats.callCounts [verb]++;
 	stats.whenLastCall = new Date ();
 	flStatsChanged = true;
-	
-	console.log ("handleBettyCall: verb == " + verb);
-	
 	switch (verb) {
 		case "examples.getStateList":
 			return (getStateList (params [0]));
@@ -245,7 +242,6 @@ function startup () {
 				}
 			switch (theRequest.lowerpath) {
 				case "/rpc2":
-					console.log (theRequest.postBody);
 					xmlrpc.server (theRequest.postBody, function (err, verb, params, format) {
 						function errorReturn (err) {
 							theRequest.httpReturn (200, "text/plain", xmlrpc.getFaultText (err, format)); 

@@ -1,6 +1,6 @@
 var appConsts = {
 	productnameForDisplay: "XML-RPC Debugger",
-	version: "0.4.2"
+	version: "0.4.3"
 	}
 var config = {
 	urlEndpoint: "http://betty.userland.com/RPC2",
@@ -56,6 +56,7 @@ function setupExample (example) {
 	setupFormFromConfig ();
 	}
 
+
 function getConfigFromForm () {
 	config.urlEndpoint = $("#idEndpoint").val ();
 	config.verb = $("#idVerb").val ();
@@ -63,6 +64,48 @@ function getConfigFromForm () {
 	config.format = $("#idFormatMenu").val ();
 	localStorage.xmlRpcConfig = jsonStringify (config);
 	console.log ("getConfigFromForm: localStorage.xmlRpcConfig == " + localStorage.xmlRpcConfig);
+	}
+function getShareableUrl () { //12/10/19 by DW
+	var url = window.location.href;
+	if (stringContains (url, "?")) {
+		url = stringNthField (url, "?", 1);
+		}
+	url += "?";
+	function addparam (name, val, fllastparam) {
+		url += name + "=" + encodeURIComponent (val)
+		if (!fllastparam) {
+			url += "&";
+			}
+		}
+	getConfigFromForm ();
+	addparam ("endpoint", config.urlEndpoint)
+	addparam ("verb", config.verb)
+	addparam ("params", config.params)
+	addparam ("format", config.format, true)
+	return (url);
+	}
+function getConfigFromUrlparams () { //12/10/19 by DW
+	var flallparamspresent = true;
+	function getparam (name) {
+		var val = getURLParameter (name);
+		if (val != "null") {
+			return (decodeURIComponent (val));
+			}
+		else {
+			flallparamspresent = false;
+			return (undefined);
+			}
+		}
+	var endpoint = getparam ("endpoint");
+	var verb = getparam ("verb");
+	var params = getparam ("params");
+	var format = getparam ("format");
+	if (flallparamspresent) {
+		config.urlEndpoint = endpoint;
+		config.verb = verb;
+		config.params = params;
+		config.format = format;
+		}
 	}
 function setFormLabels () {
 	var format = config.format.toUpperCase ();
@@ -115,6 +158,7 @@ function startup () {
 		catch (err) {
 			}
 		}
+	getConfigFromUrlparams (); //12/10/19 by DW
 	setupFormFromConfig ();
 	hitCounter (); 
 	initGoogleAnalytics (); 
