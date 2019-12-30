@@ -140,7 +140,7 @@ You can mix types as the example above illustrates.
 
 Here's an example of a response to an XML-RPC request:
 
-```xmlHTTP/1.1 200 OKConnection: closeContent-Length: 158Content-Type: text/xmlDate: Fri, 17 Jul 1998 19:55:08 GMTServer: UserLand Frontier/5.1.2-WinNT<?xml version="1.0"?><methodResponse>	<params>		<param>			<value><string>South Dakota</string></value>			</param>		</params>	</methodResponse>```
+```xmlHTTP/1.1 200 OKConnection: closeContent-Length: 158Content-Type: text/xmlDate: Fri, 17 Jul 1998 19:55:08 GMTServer: UserLand Frontier/5.1.2-WinNT<?xml version="1.0"?><methodResponse>	<params>		<param>			<value><string>South Dakota</string></value>			</param>		</params>	</methodResponse>``` 
 
 ### Response format
 
