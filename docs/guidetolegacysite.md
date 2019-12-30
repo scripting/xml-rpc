@@ -10,8 +10,6 @@ Here are links to archived pages on the original version of the XML-RPC site to 
 
 * <a href="http://1998.xmlrpc.com/callForEndorsements.html">Call for Endorsements</a>
 
-* <a href="http://1998.xmlrpc.com/index.html">Home</a>
-
 * <a href="http://1998.xmlrpc.com/default.html">XML-RPC Home</a>
 
 * <a href="http://1998.xmlrpc.com/metaWeblogApi.html">RFC: MetaWeblog API</a>
@@ -23,8 +21,6 @@ Here are links to archived pages on the original version of the XML-RPC site to 
 * <a href="http://1998.xmlrpc.com/subsHarmonizer.html">RFC: Subscriptions harmonizer</a>
 
 * <a href="http://1998.xmlrpc.com/bdgChangeNotes.html">BDG Change Notes</a>
-
-* <a href="http://1998.xmlrpc.com/tinyoutliner.html">Tiny Outliner</a>
 
 * <a href="http://1998.xmlrpc.com/aggregatorApi.html">XML-RPC interface for the NewsRiver aggregator</a>
 
@@ -38,8 +34,6 @@ Here are links to archived pages on the original version of the XML-RPC site to 
 
 * <a href="http://1998.xmlrpc.com/weblogsComForRss.html">Weblogs.Com for RSS</a>
 
-* <a href="http://1998.xmlrpc.com/liveblogger.html">Liveblogger</a>
-
 * <a href="http://1998.xmlrpc.com/mailList.html">Mail lists</a>
 
 * <a href="http://1998.xmlrpc.com/bootstrappingTheTwoWayWeb.html">Bootstrapping the Two-Way-Web</a>
@@ -51,8 +45,6 @@ Here are links to archived pages on the original version of the XML-RPC site to 
 * <a href="http://1998.xmlrpc.com/aBusyDevelopersGuideToSoap.html">A Busy Developer's Guide to SOAP 1.1</a>
 
 * <a href="http://1998.xmlrpc.com/rebuttalToRest.html">Rebuttal to REST</a>
-
-* <a href="http://1998.xmlrpc.com/titlenoise.html">Title Noise Editor</a>
 
 * <a href="http://1998.xmlrpc.com/error.html">404 not found</a>
 
