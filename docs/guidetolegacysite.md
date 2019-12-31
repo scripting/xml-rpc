@@ -1,6 +1,6 @@
 # The 1998 XML-RPC site
 
-Here are links to archived pages on the original version of the XML-RPC site to make them easier to find and review. Most of this material is not replicated on the new site. 
+Here are links to archived pages on the <a href="http://1998.xmlrpc.com/">original version</a> of the XML-RPC site to make them easier to find and review. Most of this material is not replicated on the new site. 
 
 
 
