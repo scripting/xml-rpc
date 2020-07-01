@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.24"; 
+var myProductName = "xmlrpc"; myVersion = "0.4.25"; 
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -370,7 +370,12 @@ function xmlRpcClient (urlEndpoint, verb, params, format, callback) {
 				}
 			}
 		else {
-			console.log ("xmlRpcClient: err.message == " + err.message);
+			if (err) {
+				console.log ("xmlRpcClient: err.message == " + err.message);
+				}
+			else {
+				console.log ("xmlRpcClient: response.statusCode == " + response.statusCode);
+				}
 			if (callback !== undefined) {
 				callback (err);
 				}

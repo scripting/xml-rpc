@@ -22,8 +22,6 @@ Starting in 2019, there's a new implementation of XML-RPC in JavaScript.
 
 * Written by one of the <a href="http://scripting.com/?tab=about">designers</a> of the protocol.
 
-The <a href="http://1998.xmlrpc.com/">original site</a>, dating back to 1998, is preserved. 
-
 ### Example client
 
 Here's code that makes a simple XML-RPC call in a Node.js app.
@@ -144,6 +142,10 @@ I started a page at <a href="http://reboot.xmlrpc.com/">reboot.xmlrpc.com</a> wi
 Read Eric Kidd's fantastic <a href="http://xmlrpc-c.sourceforge.net/xmlrpc-howto/xmlrpc-howto.html">XML-RPC HowTo</a>.
 
 Test your implementation on the XML-RPC Validator page.
+
+### The original site
+
+The original site, dating back to 1998, is <a href="http://1998.xmlrpc.com/">preserved</a>. 
 
 ### Lest anyone forget 
 

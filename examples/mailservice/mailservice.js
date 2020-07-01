@@ -9,6 +9,7 @@ var config = {
 	port: 1417,
 	flPostEnabled: true,
 	flLogToConsole: true, 
+	flAllowAccessFromAnywhere: true, //3/8/20 by DW
 	xmlRpcPath: "/rpc2",
 	archiveFolder: "data/archive/"
 	}
