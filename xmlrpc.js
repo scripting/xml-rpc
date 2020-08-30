@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.25"; 
+var myProductName = "xmlrpc"; myVersion = "0.4.26"; 
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -78,7 +78,7 @@ function getXmlValue (theValue) { //xmlize a JavaScript value
 					}
 				}
 		default:
-			return ("<base64>" + btoa (theValue) + "</base64>");
+			return ("<base64>" + theValue.toString ("base64") + "</base64>");
 		}
 	}
 function getReturnText (theValue, format) { //get xml or json for a returned value

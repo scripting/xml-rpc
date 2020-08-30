@@ -6,7 +6,7 @@ const davehttp = require ("davehttp");
 const fs = require ("fs");
 
 var config = {
-	port: 5392,
+	port: process.env.PORT || 5392,
 	flPostEnabled: true,
 	flAllowAccessFromAnywhere: true,
 	flLogToConsole: true

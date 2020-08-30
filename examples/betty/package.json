@@ -3,6 +3,7 @@
 	"description": "UserLand's 'betty' test server, written in JavaScript, running in Node.",
 	"author": "Dave Winer <dave@smallpicture.com>",
 	"license": "MIT",
+	"main": "betty.js", 
 	"version": "0.4.0",
 	"dependencies" : {
 		"daveutils": "*",
