@@ -139,7 +139,7 @@ If you have success, or find problems, please post a note in the <a href="https:
 
 I started a page at <a href="http://reboot.xmlrpc.com/">reboot.xmlrpc.com</a> with links to new stuff related to this work. 
 
-Read Eric Kidd's fantastic <a href="http://xmlrpc-c.sourceforge.net/xmlrpc-howto/xmlrpc-howto.html">XML-RPC HowTo</a>.
+Read Eric Kidd's fantastic <a href="https://tldp.org/HOWTO/XML-RPC-HOWTO/index.html">XML-RPC HowTo</a>.
 
 Test your implementation on the XML-RPC Validator page.
 
