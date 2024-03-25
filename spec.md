@@ -1,4 +1,4 @@
-<i>Tue, Jun 15, 1999; by Dave Winer.</i>
+<i>Tue, Jun 15, 1999; by Dave Winer.</i> 
 
 # XML-RPC Specification
 

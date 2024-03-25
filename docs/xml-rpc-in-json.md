@@ -1,4 +1,4 @@
-<i>June 2018 by Dave Winer</i>
+<i>June 2018 by Dave Winer</i> 
 
 # XML-RPC-in-JSON examples
 

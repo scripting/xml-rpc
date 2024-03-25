@@ -1,4 +1,4 @@
-# What is XML-RPC? 
+# What is XML-RPC?  
 
 It's a <a href="http://xmlrpc.com/spec.md">spec</a> and a set of implementations that allow software running on disparate operating systems, running in different environments to make procedure calls over the Internet.
 
