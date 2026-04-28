@@ -1,4 +1,4 @@
-var myProductName = "xmlrpc"; myVersion = "0.4.26"; 
+var myProductName = "xmlrpc"; myVersion = "0.5.0"; 
 
 exports.client = xmlRpcClient;
 exports.server = xmlRpcServer; 
@@ -390,55 +390,30 @@ function xmlRpcServer (rpctext, callback) {
 			};
 		callback (err);
 		}
-	if (config.flProcessJsonRpcCalls && (firstNonWhitespaceChar (rpctext) == "{")) { //treat it as JSON -- 6/3/18 by DW
-		var jstruct, methodCall = undefined, verb = undefined;
-		try {
-			jstruct = JSON.parse (rpctext);
-			methodCall = jstruct.methodCall;
-			}
-		catch (err) {
-			callback (err);
-			}
-		if (methodCall !== undefined) {
-			verb = methodCall.methodName;
-			if (verb !== undefined) {
-				if (methodCall.params !== undefined) {
-					params = methodCall.params;
-					}
-				else {
-					params = new Array ();
-					}
-				callback (undefined, verb, params, "json");
-				}
-			else {
-				badCall ("methodName");
-				}
-			}
-		else {
-			badCall ("methodCall");
-			}
+	if (rpctext === undefined) { //4/28/26; 11:05:25 AM by DW
+		const message = "Can't respond to the XML-RPC request because there is no body for the request.";
+		callback ({message});
 		}
 	else {
-		var options = {
-			explicitArray: false
-			};
-		xml2js.parseString (rpctext, options, function (err, jstruct) {
-			var methodCall = jstruct.methodCall, verb = undefined, params = new Array ();
+		if (config.flProcessJsonRpcCalls && (firstNonWhitespaceChar (rpctext) == "{")) { //treat it as JSON -- 6/3/18 by DW
+			var jstruct, methodCall = undefined, verb = undefined;
+			try {
+				jstruct = JSON.parse (rpctext);
+				methodCall = jstruct.methodCall;
+				}
+			catch (err) {
+				callback (err);
+				}
 			if (methodCall !== undefined) {
 				verb = methodCall.methodName;
 				if (verb !== undefined) {
 					if (methodCall.params !== undefined) {
-						var param = methodCall.params.param;
-						if (param !== undefined) {
-							if (!Array.isArray (param)) {
-								param = [param];
-								}
-							for (var i = 0; i < param.length; i++) {
-								params.push (xmlRpcGetValue (param [i].value));
-								}
-							}
+						params = methodCall.params;
 						}
-					callback (undefined, verb, params, "xml");
+					else {
+						params = new Array ();
+						}
+					callback (undefined, verb, params, "json");
 					}
 				else {
 					badCall ("methodName");
@@ -447,9 +422,41 @@ function xmlRpcServer (rpctext, callback) {
 			else {
 				badCall ("methodCall");
 				}
-			});
+			}
+		else {
+			var options = {
+				explicitArray: false
+				};
+			xml2js.parseString (rpctext, options, function (err, jstruct) {
+				var methodCall = jstruct.methodCall, verb = undefined, params = new Array ();
+				if (methodCall !== undefined) {
+					verb = methodCall.methodName;
+					if (verb !== undefined) {
+						if (methodCall.params !== undefined) {
+							var param = methodCall.params.param;
+							if (param !== undefined) {
+								if (!Array.isArray (param)) {
+									param = [param];
+									}
+								for (var i = 0; i < param.length; i++) {
+									params.push (xmlRpcGetValue (param [i].value));
+									}
+								}
+							}
+						callback (undefined, verb, params, "xml");
+						}
+					else {
+						badCall ("methodName");
+						}
+					}
+				else {
+					badCall ("methodCall");
+					}
+				});
+			}
 		}
 	}
+
 function startServerOverHttp (config, callback) { //9/3/19 by DW
 	if (config === undefined) {
 		config = {

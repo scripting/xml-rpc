@@ -1,4 +1,4 @@
-# What is XML-RPC?  
+# What is XML-RPC?
 
 It's a <a href="http://xmlrpc.com/spec.md">spec</a> and a set of implementations that allow software running on disparate operating systems, running in different environments to make procedure calls over the Internet.
 
@@ -22,7 +22,7 @@ Starting in 2019, there's a new implementation of XML-RPC in JavaScript.
 
 * Written by one of the <a href="http://scripting.com/?tab=about">designers</a> of the protocol.
 
-### Example client
+### Example client 
 
 Here's code that makes a simple XML-RPC call in a Node.js app.
 
